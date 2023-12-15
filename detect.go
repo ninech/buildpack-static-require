@@ -10,7 +10,10 @@ import (
 	"github.com/paketo-buildpacks/packit/v2/scribe"
 )
 
-const indexFile = "index.html"
+const (
+	indexFile  = "index.html"
+	webRootEnv = "BP_STATIC_WEBROOT"
+)
 
 type BuildPlanMetadata struct {
 	Version       string `toml:"version,omitempty"`
@@ -40,6 +43,11 @@ func Detect(logger scribe.Emitter) packit.DetectFunc {
 }
 
 func WebRoot(workingDir string) (string, error) {
+	// the webroot can be set using an env var
+	if v, ok := os.LookupEnv(webRootEnv); ok {
+		return v, nil
+	}
+
 	paths := []string{"./", "./public"}
 	publicDir := ""
 	for _, path := range paths {
