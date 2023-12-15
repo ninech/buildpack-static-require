@@ -8,7 +8,7 @@ import (
 )
 
 func TestUnitBuildpackStatic(t *testing.T) {
-	suite := spec.New("buildpack-static-require", spec.Report(report.Terminal{}), spec.Parallel())
+	suite := spec.New("buildpack-static-require", spec.Report(report.Terminal{}))
 	suite("Detect", testDetect)
 	suite.Run(t)
 }

@@ -97,4 +97,20 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 			Expect(err).To(MatchError(packit.Fail.WithMessage("no index.html found")))
 		})
 	})
+
+	context("when webroot is set via env", func() {
+		it.Before(func() {
+			t.Setenv(webRootEnv, "custom")
+		})
+
+		it("requires nginx", func() {
+			result, err := Detect(scribe.NewEmitter(buffer))(packit.DetectContext{
+				WorkingDir: workingDir,
+			})
+			Expect(err).NotTo(HaveOccurred())
+			Expect(result.Plan.Requires).To(ContainElement(packit.BuildPlanRequirement{
+				Name: nginx.NGINX, Metadata: BuildPlanMetadata{Launch: true},
+			}))
+		})
+	})
 }
