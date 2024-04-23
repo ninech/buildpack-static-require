@@ -12,7 +12,7 @@ import (
 
 const (
 	indexFile  = "index.html"
-	webRootEnv = "BP_STATIC_WEBROOT"
+	WebRootEnv = "BP_STATIC_WEBROOT"
 )
 
 type BuildPlanMetadata struct {
@@ -44,7 +44,7 @@ func Detect(logger scribe.Emitter) packit.DetectFunc {
 
 func WebRoot(workingDir string) (string, error) {
 	// the webroot can be set using an env var
-	if v, ok := os.LookupEnv(webRootEnv); ok {
+	if v, ok := os.LookupEnv(WebRootEnv); ok {
 		return v, nil
 	}
 
