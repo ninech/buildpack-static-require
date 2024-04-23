@@ -100,7 +100,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 	context("when webroot is set via env", func() {
 		it.Before(func() {
-			t.Setenv(webRootEnv, "custom")
+			t.Setenv(WebRootEnv, "custom")
 		})
 
 		it("requires nginx", func() {
